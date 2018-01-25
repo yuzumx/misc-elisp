@@ -94,7 +94,6 @@ locate PACKAGE."
 (require-package 'wgrep)
 (require-package 'diminish)
 (require-package 'command-log-mode)
-(require-package 'dsvn)
 (maybe-require-package 'regex-tool)
 
 (defvar after-make-console-frame-hooks '()
