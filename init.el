@@ -159,14 +159,11 @@ Selectively runs either `after-make-console-frame-hooks' or
 
 (maybe-require-package 'disable-mouse)
 
-(require-package 'dired-sort)
-
 ;; Prefer g-prefixed coreutils version of standard utilities when available
 (let ((gls (executable-find "gls")))
   (when gls (setq insert-directory-program gls)))
 
 (with-eval-after-load 'dired
-  (require 'dired-sort)
   (setq-default dired-dwim-target t))
 
 (when (maybe-require-package 'anzu)
