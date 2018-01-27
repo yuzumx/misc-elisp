@@ -1,0 +1,17 @@
+;; -*- mode: emacs-lisp -*-
+
+;; Ruby - my convention for heredocs containing SQL
+;; Needs to run after rinari to avoid clobbering font-lock-keywords?
+;; (require-package 'mmm-mode)
+;; (eval-after-load 'mmm-mode
+;;   '(progn
+;;      (mmm-add-classes
+;;       '((ruby-heredoc-sql
+;;          :submode sql-mode
+;;          :front "<<-?[\'\"]?\\(end_sql\\)[\'\"]?"
+;;          :save-matches 1
+;;          :front-offset (end-of-line 1)
+;;          :back "^[ \t]*~1$"
+;;          :delimiter-mode nil)))
+;;      (mmm-add-mode-ext-class 'ruby-mode "\\.rb\\'" 'ruby-heredoc-sql)))
+;; (add-to-list 'mmm-set-file-name-for-modes 'ruby-mode)
