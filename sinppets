@@ -15,3 +15,12 @@
 ;;          :delimiter-mode nil)))
 ;;      (mmm-add-mode-ext-class 'ruby-mode "\\.rb\\'" 'ruby-heredoc-sql)))
 ;; (add-to-list 'mmm-set-file-name-for-modes 'ruby-mode)
+
+;;; git-svn support
+;; (when (maybe-require-package 'magit-svn)
+;;   (require-package 'magit-svn)
+;;   (autoload 'magit-svn-enabled "magit-svn")
+;;   (defun remx/maybe-enable-magit-svn-mode ()
+;;     (when (magit-svn-enabled)
+;;       (magit-svn-mode)))
+;;   (add-hook 'magit-status-mode-hook #'remx/maybe-enable-magit-svn-mode))
