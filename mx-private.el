@@ -3,6 +3,7 @@
 
 (dolist (hook '(c-mode-hook c++-mode-hook))
   (add-hook hook (lambda ()
+                   (setq-local company-minimum-prefix-length 2)
                    (setq-local company-backends '((company-irony company-irony-c-headers)
                                                   company-dabbrev-code
                                                   company-files
