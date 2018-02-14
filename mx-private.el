@@ -13,4 +13,7 @@
 (with-eval-after-load 'tern
   (add-to-list 'tern-command "--no-port-file" 'append))
 
+(setq-default lua-indent-level 4)
+(setq-default lua-indent-string-contents t)
+
 (provide 'mx-private)
