@@ -16,4 +16,7 @@
 (setq-default lua-indent-level 4)
 (setq-default lua-indent-string-contents t)
 
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 (provide 'mx-private)
