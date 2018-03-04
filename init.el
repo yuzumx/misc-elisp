@@ -158,12 +158,11 @@ Selectively runs either `after-make-console-frame-hooks' or
 
 (maybe-require-package 'disable-mouse)
 
+(setq dired-dwim-target t)
+
 ;; Prefer g-prefixed coreutils version of standard utilities when available
 (let ((gls (executable-find "gls")))
   (when gls (setq insert-directory-program gls)))
-
-(with-eval-after-load 'dired
-  (setq-default dired-dwim-target t))
 
 (when (maybe-require-package 'anzu)
   (add-hook 'after-init-hook 'global-anzu-mode)
