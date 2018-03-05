@@ -45,6 +45,7 @@ values."
      common-lisp
      html
      javascript
+     typescript
      php
      python
      shell-scripts
