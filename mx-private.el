@@ -19,4 +19,10 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(defun remx/find-mxem-private-config ()
+  "Find mxem private configuration file."
+  (interactive)
+  (let ((remx-private-settings-file (expand-file-name "lisp/mx-private.el" user-emacs-directory)))
+    (find-file-existing remx-private-settings-file)))
+
 (provide 'mx-private)
