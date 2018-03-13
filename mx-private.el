@@ -25,4 +25,7 @@
   (let ((remx-private-settings-file (expand-file-name "lisp/mx-private.el" user-emacs-directory)))
     (find-file-existing remx-private-settings-file)))
 
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-M-/") 'company-other-backend))
+
 (provide 'mx-private)
