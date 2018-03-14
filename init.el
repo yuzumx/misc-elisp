@@ -30,11 +30,11 @@
 
 ;;; Code:
 
-(defconst reimuxmx-initial-gc-cons-threshold gc-cons-threshold
+(defconst remx-initial-gc-cons-threshold gc-cons-threshold
   "Initial value of `gc-cons-threshold' at start-up time.")
 (setq gc-cons-threshold 50000000)
 (add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold reimuxmx-initial-gc-cons-threshold)))
+          (lambda () (setq gc-cons-threshold remx-initial-gc-cons-threshold)))
 
 (setq custom-file (expand-file-name ".emacs-custom.el" user-emacs-directory))
 
@@ -45,7 +45,7 @@
   (dolist (pattern patterns)
     (add-to-list 'auto-mode-alist (cons pattern mode))))
 
-(defun reimuxmx/string-all-matches (regex str &optional group)
+(defun remx/string-all-matches (regex str &optional group)
   "Find all matches for `REGEX' within `STR', returning the full match string or group `GROUP'."
   (let ((result nil)
         (pos 0)
@@ -112,33 +112,33 @@ Selectively runs either `after-make-console-frame-hooks' or
 
 (add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
 
-(defconst reimuxmx-initial-frame (selected-frame)
+(defconst remx-initial-frame (selected-frame)
   "The frame (if any) active during Emacs initialization.")
 
 (add-hook 'after-init-hook
-          (lambda () (when reimuxmx-initial-frame
-                  (run-after-make-frame-hooks reimuxmx-initial-frame))))
+          (lambda () (when remx-initial-frame
+                  (run-after-make-frame-hooks remx-initial-frame))))
 
 (global-set-key [mouse-4] (lambda () (interactive) (scroll-down 1)))
 (global-set-key [mouse-5] (lambda () (interactive) (scroll-up 1)))
 
 (autoload 'mwheel-install "mwheel")
 
-(defun reimuxmx/console-frame-setup ()
+(defun remx/console-frame-setup ()
   (xterm-mouse-mode 1) ; Mouse in a terminal (Use shift to paste with middle button)
   (mwheel-install))
 
-(add-hook 'after-make-console-frame-hooks 'reimuxmx/console-frame-setup)
+(add-hook 'after-make-console-frame-hooks 'remx/console-frame-setup)
 
 (setq-default custom-enabled-themes '(tsdh-dark))
 
-(defun reimuxmx/reapply-themes ()
+(defun remx/reapply-themes ()
   "Forcibly load the themes listed in `custom-enabled-themes'."
   (dolist (theme custom-enabled-themes)
     (unless (custom-theme-p theme)
       (load-theme theme)))
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
-(add-hook 'after-init-hook 'reimuxmx/reapply-themes)
+(add-hook 'after-init-hook 'remx/reapply-themes)
 
 (setq inhibit-startup-screen t)
 
@@ -171,7 +171,7 @@ Selectively runs either `after-make-console-frame-hooks' or
 
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
 
-(defun reimuxmx/isearch-yank-symbol ()
+(defun remx/isearch-yank-symbol ()
   "*Put symbol at current point into search string."
   (interactive)
   (let ((sym (symbol-at-point)))
@@ -184,16 +184,16 @@ Selectively runs either `after-make-console-frame-hooks' or
       (ding)))
   (isearch-search-and-update))
 
-(define-key isearch-mode-map "\C-\M-w" 'reimuxmx/isearch-yank-symbol)
+(define-key isearch-mode-map "\C-\M-w" 'remx/isearch-yank-symbol)
 
-(defun reimuxmx/isearch-exit-other-end (rbeg rend)
+(defun remx/isearch-exit-other-end (rbeg rend)
   "Exit isearch, but at the other end of the search string.
 This is useful when followed by an immediate kill."
   (interactive "r")
   (isearch-exit)
   (goto-char isearch-other-end))
 
-(define-key isearch-mode-map [(control return)] 'reimuxmx/isearch-exit-other-end)
+(define-key isearch-mode-map [(control return)] 'remx/isearch-exit-other-end)
 
 (setq-default grep-highlight-matches t
               grep-scroll-output t)
@@ -243,12 +243,12 @@ This is useful when followed by an immediate kill."
 
 (when (maybe-require-package 'swiper)
   (with-eval-after-load 'ivy
-    (defun reimuxmx/swiper-at-point (sym)
+    (defun remx/swiper-at-point (sym)
       "Use `swiper' to search for the symbol at point."
       (interactive (list (thing-at-point 'symbol)))
       (swiper sym))
 
-    (define-key ivy-mode-map (kbd "M-s /") 'reimuxmx/swiper-at-point)))
+    (define-key ivy-mode-map (kbd "M-s /") 'remx/swiper-at-point)))
 
 (setq tab-always-indent 'complete)
 (add-to-list 'completion-styles 'initials t)
@@ -270,7 +270,7 @@ This is useful when followed by an immediate kill."
  recentf-max-saved-items 1000
  recentf-exclude '("/tmp/" "/ssh:"))
 
-(defun reimuxmx/maybe-adjust-visual-fill-column ()
+(defun remx/maybe-adjust-visual-fill-column ()
   "Readjust visual fill column when the global font size is modified.
 This is helpful for writeroom-mode, in particular."
   (if visual-fill-column-mode
@@ -278,7 +278,7 @@ This is helpful for writeroom-mode, in particular."
     (remove-hook 'after-setting-font-hook 'visual-fill-column--adjust-window t)))
 
 (add-hook 'visual-fill-column-mode-hook
-          'reimuxmx/maybe-adjust-visual-fill-column)
+          'remx/maybe-adjust-visual-fill-column)
 
 (setq-default
  bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
@@ -336,20 +336,20 @@ This is helpful for writeroom-mode, in particular."
 (when (maybe-require-package 'avy)
   (global-set-key (kbd "C-;") 'avy-goto-char-timer))
 
-(defun reimuxmx/newline-at-end-of-line ()
+(defun remx/newline-at-end-of-line ()
   "Move to end of line, enter a newline, and reindent."
   (interactive)
   (move-end-of-line 1)
   (newline-and-indent))
 
-(defun reimuxmx/kill-back-to-indentation ()
+(defun remx/kill-back-to-indentation ()
   "Kill from point back to the first non-whitespace character on the line."
   (interactive)
   (let ((prev-pos (point)))
     (back-to-indentation)
     (kill-region (point) prev-pos)))
 
-(defun reimuxmx/open-line-with-reindent (n)
+(defun remx/open-line-with-reindent (n)
   "A version of `open-line' which reindents the start and end positions.
 If there is a fill prefix and/or a `left-margin', insert them
 on the new line if the line would have been blank.
@@ -376,7 +376,7 @@ With arg N, insert N newlines."
     (end-of-line)
     (indent-according-to-mode)))
 
-(defun reimuxmx/sort-lines-random (beg end)
+(defun remx/sort-lines-random (beg end)
   "Sort lines in region randomly."
   (interactive "r")
   (save-excursion
@@ -388,7 +388,7 @@ With arg N, insert N newlines."
         (sort-subr nil 'forward-line 'end-of-line nil nil
                    (lambda (s1 s2) (eq (random 2) 0)))))))
 
-(defun reimuxmx/delete-current-file ()
+(defun remx/delete-current-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
   (unless (buffer-file-name)
@@ -398,7 +398,7 @@ With arg N, insert N newlines."
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
 
-(defun reimuxmx/rename-current-file-and-buffer (new-name)
+(defun remx/rename-current-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
@@ -411,7 +411,7 @@ With arg N, insert N newlines."
       (set-visited-file-name new-name)
       (rename-buffer new-name))))
 
-(defun reimuxmx/browse-current-file ()
+(defun remx/browse-current-file ()
   "Open the current file as a URL using `browse-url'."
   (interactive)
   (let ((file-name (buffer-file-name)))
@@ -431,7 +431,7 @@ With arg N, insert N newlines."
 
 (setq-default show-trailing-whitespace t)
 
-(defun reimuxmx/no-trailing-whitespace ()
+(defun remx/no-trailing-whitespace ()
   "Turn off display of trailing whitespace in this buffer."
   (setq show-trailing-whitespace nil))
 
@@ -444,7 +444,7 @@ With arg N, insert N newlines."
                 compilation-mode-hook
                 twittering-mode-hook
                 minibuffer-setup-hook))
-  (add-hook hook #'reimuxmx/no-trailing-whitespace))
+  (add-hook hook #'remx/no-trailing-whitespace))
 
 (require-package 'whitespace-cleanup-mode)
 (add-hook 'after-init-hook 'global-whitespace-cleanup-mode)
@@ -468,18 +468,18 @@ With arg N, insert N newlines."
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(defun reimuxmx/utf8-locale-p (v)
+(defun remx/utf8-locale-p (v)
   "Return whether locale string V relates to a UTF-8 locale."
   (and v (string-match "UTF-8" v)))
 
-(defun reimuxmx/locale-is-utf8-p ()
+(defun remx/locale-is-utf8-p ()
   "Return t iff the \"locale\" command or environment variables prefer UTF-8."
-  (or (reimuxmx/utf8-locale-p (and (executable-find "locale") (shell-command-to-string "locale")))
-      (reimuxmx/utf8-locale-p (getenv "LC_ALL"))
-      (reimuxmx/utf8-locale-p (getenv "LC_CTYPE"))
-      (reimuxmx/utf8-locale-p (getenv "LANG"))))
+  (or (remx/utf8-locale-p (and (executable-find "locale") (shell-command-to-string "locale")))
+      (remx/utf8-locale-p (getenv "LC_ALL"))
+      (remx/utf8-locale-p (getenv "LC_CTYPE"))
+      (remx/utf8-locale-p (getenv "LANG"))))
 
-(when (or window-system (reimuxmx/locale-is-utf8-p))
+(when (or window-system (remx/locale-is-utf8-p))
   (set-language-environment 'utf-8)
   (setq locale-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8)
