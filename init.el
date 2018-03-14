@@ -5,7 +5,7 @@
 ;; Author: MX Reimu <reimu-mx@outlook.com>
 ;; URL: https://github.com/re-mx/misc-elisp
 ;; Package-Requires: ((emacs "25.0"))
-;; Version: 1.0.0
+;; Version: 2.0.0
 
 ;; This file is not part of GNU Emacs
 
