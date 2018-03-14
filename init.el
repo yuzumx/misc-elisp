@@ -140,9 +140,6 @@ Selectively runs either `after-make-console-frame-hooks' or
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 (add-hook 'after-init-hook 'reimuxmx/reapply-themes)
 
-(setq-default initial-scratch-message
-              (concat ";; Happy Hacking, " user-login-name " ∞ Emacs ♥ You!\n\n"))
-
 (setq inhibit-startup-screen t)
 
 (when (fboundp 'tool-bar-mode)
