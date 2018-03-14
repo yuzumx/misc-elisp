@@ -1,11 +1,11 @@
-;;; init.el --- ReimuXMX's root Emacs Configuration
+;;; init.el --- re-mx's root Emacs Configuration
 
-;; Copyright (c) 2008-2017 ReimuXMX in BLF Club
+;; Copyright (c) 2008-2017 MX Reimu in BLF Club
 
-;; Author: MX Reimu <yuan_pre@outlook.com>
-;; URL: https://gitee.com/ReimuXMX/XMXAConfig
+;; Author: MX Reimu <reimu-mx@outlook.com>
+;; URL: https://github.com/re-mx/misc-elisp
 ;; Package-Requires: ((emacs "25.0"))
-;; Version 1.0.0
+;; Version: 1.0.0
 
 ;; This file is not part of GNU Emacs
 
