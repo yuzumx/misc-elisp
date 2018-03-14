@@ -32,7 +32,7 @@
 
 (defconst reimuxmx-initial-gc-cons-threshold gc-cons-threshold
   "Initial value of `gc-cons-threshold' at start-up time.")
-(setq gc-cons-threshold 100000000)
+(setq gc-cons-threshold 50000000)
 (add-hook 'after-init-hook
           (lambda () (setq gc-cons-threshold reimuxmx-initial-gc-cons-threshold)))
 
@@ -218,7 +218,6 @@ This is useful when followed by an immediate kill."
 (when (maybe-require-package 'ivy)
   (add-hook 'after-init-hook 'ivy-mode)
   (setq-default ivy-use-virtual-buffers t
-                projectile-completion-system 'ivy
                 ivy-initial-inputs-alist
                 '((man . "^")
                   (woman . "^")))
@@ -226,10 +225,8 @@ This is useful when followed by an immediate kill."
   (with-eval-after-load 'ivy
     (diminish 'ivy-mode)))
 
-
 (when (maybe-require-package 'ivy-historian)
   (add-hook 'after-init-hook (lambda () (ivy-historian-mode t))))
-
 
 (when (maybe-require-package 'counsel)
   (add-hook 'after-init-hook 'counsel-mode)
@@ -238,24 +235,10 @@ This is useful when followed by an immediate kill."
   (with-eval-after-load 'counsel
     (diminish 'counsel-mode))
 
-  (when (and (executable-find "ag")
-             (maybe-require-package 'projectile))
-    (defun reimuxmx/counsel-ag-project (initial-input &optional use-current-dir)
-      "Search using `counsel-ag' from the project root for INITIAL-INPUT.
-If there is no project root, or if the prefix argument
-USE-CURRENT-DIR is set, then search from the current directory
-instead."
-      (interactive (list (thing-at-point 'symbol)
-                         current-prefix-arg))
-      (let ((current-prefix-arg)
-            (dir (if use-current-dir
-                     default-directory
-                   (condition-case err
-                       (projectile-project-root)
-                     (error default-directory)))))
-        (counsel-ag initial-input dir)))
-
-    (global-set-key (kbd "M-?") 'reimuxmx/counsel-ag-project)))
+  (when (executable-find "ag")
+    (global-set-key (kbd "M-?") 'counsel-ag))
+  (when (executable-find "rg")
+    (global-set-key (kbd "M-?") 'counsel-rg)))
 
 
 (when (maybe-require-package 'swiper)
