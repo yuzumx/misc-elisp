@@ -25,4 +25,9 @@
   (let ((remx-private-settings-file (expand-file-name "lisp/mx-private.el" user-emacs-directory)))
     (find-file-existing remx-private-settings-file)))
 
+(when (maybe-require-package 'company-php)
+  (with-eval-after-load 'company
+    (add-hook 'php-mode-hook
+              (lambda () (remx/push-local-company-backend 'company-ac-php-backend)))))
+
 (provide 'mx-private)
