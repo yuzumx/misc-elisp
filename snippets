@@ -24,3 +24,12 @@
 ;;     (when (magit-svn-enabled)
 ;;       (magit-svn-mode)))
 ;;   (add-hook 'magit-status-mode-hook #'remx/maybe-enable-magit-svn-mode))
+
+;; (defun remx//irony-mode-on ()
+;;   "Avoid enabling irony-mode in modes that inherits `c-mode', e.g: php-mode."
+;;   (require 'irony)
+;;   (when (member major-mode irony-supported-major-modes)
+;;     (irony-mode 1)))
+
+;; (add-hook 'c++-mode-hook 'remx//irony-mode-on)
+;; (add-hook 'c-mode-hook 'remx//irony-mode-on)
