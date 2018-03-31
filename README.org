@@ -10,6 +10,4 @@
   
   *DO NOT* use it directly!
   
-  
-  
-  -- MX Reimu
+  -MX Reimu
