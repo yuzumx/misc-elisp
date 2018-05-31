@@ -5,9 +5,9 @@
 
 * Misc-ELisp
   My miscellaneous Emacs Lisp code
-  
+
   These codes are all separate files, not a configuration tree!
-  
+
   *DO NOT* use it directly!
-  
+
   -MX Reimu
