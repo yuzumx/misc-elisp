@@ -1,21 +1,10 @@
-;;; init.el --- re-mx's root Emacs Configuration
+;;; init.el --- Initialization File For Root User    -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2008-2017 MX Reimu in BLF Club
+;; Copyright (C) 2017-2018 Mx Reimu
 
-;; Author: MX Reimu <reimu-mx@outlook.com>
-;; URL: https://github.com/re-mx/misc-elisp
-;; Package-Requires: ((emacs "25.0"))
-;; Version: 2.0.0
+;; Author: MX Reimu <https://github.com/re-mx>
 
-;; This file is not part of GNU Emacs
-
-;;; Commentary:
-
-;; This file is a simply configuration for root user.
-
-;;; License:
-
-;; This program is free software: you can redistribute it and/or modify
+;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
@@ -26,7 +15,11 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This is my simple Emacs config for root user.
 
 ;;; Code:
 
@@ -211,7 +204,7 @@ This is useful when followed by an immediate kill."
   (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
 (when (maybe-require-package 'smex)
-  (setq-default smex-history-length 16
+  (setq-default smex-history-length 32
                 smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
   (global-set-key [remap execute-extended-command] 'smex))
 
@@ -239,7 +232,6 @@ This is useful when followed by an immediate kill."
     (global-set-key (kbd "M-?") 'counsel-ag))
   (when (executable-find "rg")
     (global-set-key (kbd "M-?") 'counsel-rg)))
-
 
 (when (maybe-require-package 'swiper)
   (with-eval-after-load 'ivy
@@ -336,46 +328,6 @@ This is helpful for writeroom-mode, in particular."
 (when (maybe-require-package 'avy)
   (global-set-key (kbd "C-;") 'avy-goto-char-timer))
 
-(defun remx/newline-at-end-of-line ()
-  "Move to end of line, enter a newline, and reindent."
-  (interactive)
-  (move-end-of-line 1)
-  (newline-and-indent))
-
-(defun remx/kill-back-to-indentation ()
-  "Kill from point back to the first non-whitespace character on the line."
-  (interactive)
-  (let ((prev-pos (point)))
-    (back-to-indentation)
-    (kill-region (point) prev-pos)))
-
-(defun remx/open-line-with-reindent (n)
-  "A version of `open-line' which reindents the start and end positions.
-If there is a fill prefix and/or a `left-margin', insert them
-on the new line if the line would have been blank.
-With arg N, insert N newlines."
-  (interactive "*p")
-  (let* ((do-fill-prefix (and fill-prefix (bolp)))
-         (do-left-margin (and (bolp) (> (current-left-margin) 0)))
-         (loc (point-marker))
-         ;; Don't expand an abbrev before point.
-         (abbrev-mode nil))
-    (delete-horizontal-space t)
-    (newline n)
-    (indent-according-to-mode)
-    (when (eolp)
-      (delete-horizontal-space t))
-    (goto-char loc)
-    (while (> n 0)
-      (cond ((bolp)
-             (if do-left-margin (indent-to (current-left-margin)))
-             (if do-fill-prefix (insert-and-inherit fill-prefix))))
-      (forward-line 1)
-      (setq n (1- n)))
-    (goto-char loc)
-    (end-of-line)
-    (indent-according-to-mode)))
-
 (defun remx/sort-lines-random (beg end)
   "Sort lines in region randomly."
   (interactive "r")
@@ -422,12 +374,6 @@ With arg N, insert N newlines."
 
 (require-package 'highlight-escape-sequences)
 (add-hook 'after-init-hook 'hes-mode)
-
-(require-package 'which-key)
-(add-hook 'after-init-hook 'which-key-mode)
-(with-eval-after-load 'which-key
-  (diminish 'which-key-mode)
-  (which-key-setup-side-window-bottom))
 
 (setq-default show-trailing-whitespace t)
 
