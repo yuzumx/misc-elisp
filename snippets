@@ -48,3 +48,10 @@
 
 ;; (add-hook 'c-mode-hook 'remx/clang-format-for-c-mode)
 ;; (add-hook 'c++-mode-hook 'remx/clang-format-for-cpp-mode)
+
+;;; Find private settings
+(defun remx/find-mxem-private-config ()
+  "Find mxem private configuration file."
+  (interactive)
+  (let ((remx-private-settings-file (expand-file-name "lisp/mx-private.el" user-emacs-directory)))
+    (find-file-existing remx-private-settings-file)))

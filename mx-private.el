@@ -1,4 +1,4 @@
-;;; mx-private.el --- My Private Configuration for XMXE
+;;; mx-private.el --- My Private Configuration for mxem
 
 
 (dolist (hook '(c-mode-hook c++-mode-hook))
@@ -18,11 +18,5 @@
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-
-(defun remx/find-mxem-private-config ()
-  "Find mxem private configuration file."
-  (interactive)
-  (let ((remx-private-settings-file (expand-file-name "lisp/mx-private.el" user-emacs-directory)))
-    (find-file-existing remx-private-settings-file)))
 
 (provide 'mx-private)
