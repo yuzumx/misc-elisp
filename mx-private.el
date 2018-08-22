@@ -5,10 +5,11 @@
   (with-eval-after-load 'company
     (add-hook hook (lambda ()
                      (setq-local company-minimum-prefix-length 2)
-                     (setq-local company-bavckends '(company-c-headers
-                                                     company-irony
-                                                     (company-dabbrev-code company-files)
-                                                     company-dabbrev))))))
+                     (setq-local company-bavckends
+                                 '(company-c-headers
+                                   company-irony
+                                   (company-dabbrev-code company-files)
+                                   company-dabbrev))))))
 
 (with-eval-after-load 'tern
   (add-to-list 'tern-command "--no-port-file" 'append))
