@@ -389,4 +389,4 @@ This is useful when followed by an immediate kill."
 ;; no-byte-compile: t
 ;; End:
 
-;; init.el ends here
+;;; init.el ends here
