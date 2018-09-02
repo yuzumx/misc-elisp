@@ -23,11 +23,8 @@
 
 ;;; Code:
 
-(defconst remx-initial-gc-cons-threshold gc-cons-threshold
-  "Initial value of `gc-cons-threshold' at start-up time.")
-(setq gc-cons-threshold 50000000)
-(add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold remx-initial-gc-cons-threshold)))
+(setq gc-cons-threshold 33554432)
+(add-hook 'emacs-startup-hook (lambda (setq gc-cons-threshold 800000)))
 
 (setq custom-file (expand-file-name ".emacs-custom.el" user-emacs-directory))
 
@@ -89,39 +86,7 @@ locate PACKAGE."
 (require-package 'command-log-mode)
 (maybe-require-package 'regex-tool)
 
-(defvar after-make-console-frame-hooks '()
-  "Hooks to run after creating a new TTY frame.")
-(defvar after-make-window-system-frame-hooks '()
-  "Hooks to run after creating a new GUI frame.")
-
-(defun run-after-make-frame-hooks (frame)
-  "Run configured hooks in response to the newly-created FRAME.
-Selectively runs either `after-make-console-frame-hooks' or
-`after-make-window-system-frame-hooks'"
-  (with-selected-frame frame
-    (run-hooks (if window-system
-                   'after-make-window-system-frame-hooks
-                 'after-make-console-frame-hooks))))
-
-(add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
-
-(defconst remx-initial-frame (selected-frame)
-  "The frame (if any) active during Emacs initialization.")
-
-(add-hook 'after-init-hook
-          (lambda () (when remx-initial-frame
-                  (run-after-make-frame-hooks remx-initial-frame))))
-
-(global-set-key [mouse-4] (lambda () (interactive) (scroll-down 1)))
-(global-set-key [mouse-5] (lambda () (interactive) (scroll-up 1)))
-
-(autoload 'mwheel-install "mwheel")
-
-(defun remx/console-frame-setup ()
-  (xterm-mouse-mode 1) ; Mouse in a terminal (Use shift to paste with middle button)
-  (mwheel-install))
-
-(add-hook 'after-make-console-frame-hooks 'remx/console-frame-setup)
+(xterm-mouse-mode 1)
 
 (setq-default custom-enabled-themes '(tsdh-dark))
 
@@ -141,10 +106,6 @@ Selectively runs either `after-make-console-frame-hooks' or
   (set-scroll-bar-mode nil))
 (when (fboundp 'menu-bar-mode)
   (menu-bar-mode -1))
-
-(let ((no-border '(internal-border-width . 0)))
-  (add-to-list 'default-frame-alist no-border)
-  (add-to-list 'initial-frame-alist no-border))
 
 (maybe-require-package 'disable-mouse)
 
@@ -188,13 +149,13 @@ This is useful when followed by an immediate kill."
 
 (define-key isearch-mode-map [(control return)] 'remx/isearch-exit-other-end)
 
-(setq-default grep-highlight-matches t
-              grep-scroll-output t)
+(setq grep-highlight-matches t
+      grep-scroll-output t)
 
 (when (executable-find "ag")
   (require-package 'ag)
   (require-package 'wgrep-ag)
-  (setq-default ag-highlight-search t))
+  (setq ag-highlight-search t))
 
 (require 'uniquify)
 (setq uniquify-ignore-buffers-re "^\\*")
@@ -210,10 +171,10 @@ This is useful when followed by an immediate kill."
 
 (when (maybe-require-package 'ivy)
   (add-hook 'after-init-hook 'ivy-mode)
-  (setq-default ivy-use-virtual-buffers t
-                ivy-initial-inputs-alist
-                '((man . "^")
-                  (woman . "^")))
+  (setq ivy-use-virtual-buffers t
+        ivy-initial-inputs-alist
+        '((man . "^")
+          (woman . "^")))
 
   (with-eval-after-load 'ivy
     (diminish 'ivy-mode)))
@@ -223,15 +184,15 @@ This is useful when followed by an immediate kill."
 
 (when (maybe-require-package 'counsel)
   (add-hook 'after-init-hook 'counsel-mode)
-  (setq-default counsel-mode-override-describe-bindings t)
+  (setq counsel-mode-override-describe-bindings t)
 
   (with-eval-after-load 'counsel
     (diminish 'counsel-mode))
 
   (when (executable-find "ag")
-    (global-set-key (kbd "M-?") 'counsel-ag))
+    (global-set-key (kbd "M-s / a") 'counsel-ag))
   (when (executable-find "rg")
-    (global-set-key (kbd "M-?") 'counsel-rg)))
+    (global-set-key (kbd "M-s / r") 'counsel-rg)))
 
 (when (maybe-require-package 'swiper)
   (with-eval-after-load 'ivy
@@ -240,7 +201,7 @@ This is useful when followed by an immediate kill."
       (interactive (list (thing-at-point 'symbol)))
       (swiper sym))
 
-    (define-key ivy-mode-map (kbd "M-s /") 'remx/swiper-at-point)))
+    (define-key ivy-mode-map (kbd "M-s s") 'remx/swiper-at-point)))
 
 (setq tab-always-indent 'complete)
 (add-to-list 'completion-styles 'initials t)
@@ -258,19 +219,8 @@ This is useful when followed by an immediate kill."
   (add-hook 'after-init-hook 'global-company-mode))
 
 (add-hook 'after-init-hook 'recentf-mode)
-(setq-default
- recentf-max-saved-items 1000
- recentf-exclude '("/tmp/" "/ssh:"))
-
-(defun remx/maybe-adjust-visual-fill-column ()
-  "Readjust visual fill column when the global font size is modified.
-This is helpful for writeroom-mode, in particular."
-  (if visual-fill-column-mode
-      (add-hook 'after-setting-font-hook 'visual-fill-column--adjust-window nil t)
-    (remove-hook 'after-setting-font-hook 'visual-fill-column--adjust-window t)))
-
-(add-hook 'visual-fill-column-mode-hook
-          'remx/maybe-adjust-visual-fill-column)
+(setq recentf-max-saved-items 1000
+      recentf-exclude '("/tmp/" "/ssh:"))
 
 (setq-default
  bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
@@ -377,11 +327,11 @@ This is helpful for writeroom-mode, in particular."
 
 (setq-default show-trailing-whitespace t)
 
+;; But don't show trailing whitespace in SQLi, inf-ruby etc.
 (defun remx/no-trailing-whitespace ()
   "Turn off display of trailing whitespace in this buffer."
   (setq show-trailing-whitespace nil))
 
-;; But don't show trailing whitespace in SQLi, inf-ruby etc.
 (dolist (hook '(special-mode-hook
                 Info-mode-hook
                 eww-mode-hook
@@ -426,7 +376,6 @@ This is helpful for writeroom-mode, in particular."
       (remx/utf8-locale-p (getenv "LANG"))))
 
 (when (or window-system (remx/locale-is-utf8-p))
-  (set-language-environment 'utf-8)
   (setq locale-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
