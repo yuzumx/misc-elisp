@@ -88,7 +88,7 @@ locate PACKAGE."
 
 (xterm-mouse-mode 1)
 
-(setq-default custom-enabled-themes '(tsdh-dark))
+(setq-default custom-enabled-themes '(wombat))
 
 (defun remx/reapply-themes ()
   "Forcibly load the themes listed in `custom-enabled-themes'."
