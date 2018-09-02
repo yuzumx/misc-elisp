@@ -2,6 +2,7 @@
 if [ -n "$TRAVIS" ]; then
     # Make it look like this is ~/.emacs.d (needed for Emacs 24.3, at least)
     export HOME=$PWD/..
+    rm -rf ~/.emacs.d
     mkdir $HOME/.emacs.d
     ln -s init.el $HOME/.emacs.d/init.el
 fi

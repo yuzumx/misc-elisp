@@ -1,4 +1,4 @@
-language: ruby
+language: emacs-lisp
 
 cache:
   directories:
@@ -25,7 +25,7 @@ matrix:
     - env: EVM_EMACS=emacs-git-snapshot-travis
 
 script:
-  lsb_release -a && ./test-startup.sh
+  lsb_release -a && ./.travis-build.sh
 
 # Local Variables:
 # indent-tabs-mode: nil
