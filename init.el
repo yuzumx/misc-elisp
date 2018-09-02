@@ -24,7 +24,7 @@
 ;;; Code:
 
 (setq gc-cons-threshold 33554432)
-(add-hook 'emacs-startup-hook (lambda (setq gc-cons-threshold 800000)))
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 800000)))
 
 (setq custom-file (expand-file-name ".emacs-custom.el" user-emacs-directory))
 
