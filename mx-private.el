@@ -5,7 +5,7 @@
   (with-eval-after-load 'company
     (add-hook hook (lambda ()
                      (setq-local company-minimum-prefix-length 2)
-                     (setq-local company-bavckends
+                     (setq-local company-backends
                                  '(company-c-headers
                                    company-irony
                                    (company-dabbrev-code company-files)
