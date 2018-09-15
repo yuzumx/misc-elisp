@@ -7,6 +7,6 @@
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 
-(remx/set-opacity 88)
+(remx/set-frame-opacity 88)
 
 (provide 'mx-private)
