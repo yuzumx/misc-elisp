@@ -7,6 +7,9 @@
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 
+(setq dired-use-ls-dired nil)
+(setq dired-listing-switches "-alh --group-directories-first")
+
 (remx/set-frame-opacity 88)
 
 (provide 'mx-private)
