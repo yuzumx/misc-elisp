@@ -1,9 +1,5 @@
 language: generic
 
-branches:
-  only:
-    - init
-
 cache:
   directories:
     - $HOME/.evm
