@@ -4,7 +4,7 @@ if [ -n "$TRAVIS" ]; then
     export HOME=$PWD/..
     rm -rf $HOME/.emacs.d
     mkdir $HOME/.emacs.d
-    ln -s init.el $HOME/.emacs.d/init.el
+    ln -sf init.el $HOME/.emacs.d/init.el
 fi
 echo "Attempting startup..."
 ${EMACS:=emacs} -nw --batch \
