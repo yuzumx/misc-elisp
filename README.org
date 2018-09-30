@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-[[https://www.gnu.org/software/emacs/][https://img.shields.io/badge/Built%20With-Emacs-FFC0CB.svg]]
-[[https://gitee.com/re-mx/mxem][https://img.shields.io/badge/Built%20With-mxem-FFC0CB.svg]]
+[[https://www.gnu.org/software/emacs/][file:https://img.shields.io/badge/Built%20With-Emacs-FFC0CB.svg]]
+[[https://gitee.com/re-mx/mxem][file:https://img.shields.io/badge/Built%20With-mxem-FFC0CB.svg]]
 [[https://travis-ci.org/re-mx/misc-elisp][https://travis-ci.org/re-mx/misc-elisp.svg?branch=master]]
 
 * Misc-ELisp
