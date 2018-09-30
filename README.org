@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-[[https://www.gnu.org/software/emacs/][file:https://img.shields.io/badge/built%20with-Emacs-F596AA.svg]]
+[[https://www.gnu.org/software/emacs/][file:https://img.shields.io/badge/built%20with-Emacs-f596aa.svg]]
 [[https://gitee.com/re-mx/mxem][file:https://img.shields.io/badge/built%20with-mxem-f596aa.svg]]
 [[https://travis-ci.org/re-mx/misc-elisp][file:https://travis-ci.org/re-mx/misc-elisp.svg?branch=master]]
 
