@@ -14,8 +14,8 @@
 (with-eval-after-load 'tern
   (add-to-list 'tern-command "--no-port-file" 'append))
 
-(setq-default lua-indent-level 4)
-(setq-default lua-indent-string-contents t)
+(setq-default lua-indent-level 4
+              lua-indent-string-contents t)
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
