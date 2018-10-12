@@ -11,8 +11,7 @@
                                    (company-dabbrev-code company-files)
                                    company-dabbrev))))))
 
-(with-eval-after-load 'tern
-  (add-to-list 'tern-command "--no-port-file" 'append))
+(setq tern-command (list "tern" "--no-port-file"))
 
 (setq-default
  lua-indent-level 4
