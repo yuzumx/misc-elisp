@@ -20,4 +20,6 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
+
 (provide 'mx-private)
