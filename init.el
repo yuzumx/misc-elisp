@@ -33,7 +33,7 @@
 (require 'package)
 
 ;;; Standard elpa repositories
-(add-to-list 'package-archives '("melpa" . "https://elpa.emacs-china.org/melpa/"))
+(add-to-list 'package-archives '("melpa" . "https://elpa.emacs-china.org/melpa/") t)
 
 ;;; On-demand installation of packages
 (defun require-package (package)
