@@ -38,13 +38,12 @@
 ;;; On-demand installation of packages
 (defun require-package (package)
   "Install PACKAGE if it's not installed."
-  (if (package-installed-p package)
-      t
-    (if (assoc package package-archive-contents)
-        (package-install package)
-      (progn
-        (package-refresh-contents)
-        (package-install package)))))
+  (or (package-installed-p package)
+      (if (assoc package package-archive-contents)
+          (package-install package)
+        (progn
+          (package-refresh-contents)
+          (package-install package)))))
 
 (defun maybe-require-package (package)
   "Try to install PACKAGE, and return non-nil if successful or PACKAGE exists.
