@@ -30,52 +30,29 @@
 
 (require 'cl-lib)
 
-(defun add-auto-mode (mode &rest patterns)
-  "Add entries to `auto-mode-alist' to use `MODE' for all given file `PATTERNS'."
-  (dolist (pattern patterns)
-    (add-to-list 'auto-mode-alist (cons pattern mode))))
-
-(defun remx/string-all-matches (regex str &optional group)
-  "Find all matches for `REGEX' within `STR', returning the full match string or group `GROUP'."
-  (let ((result nil)
-        (pos 0)
-        (group (or group 0)))
-    (while (string-match regex str pos)
-      (push (match-string group str) result)
-      (setq pos (match-end group)))
-    result))
-
 (require 'package)
 
 ;;; Standard elpa repositories
 (add-to-list 'package-archives '("melpa" . "https://elpa.emacs-china.org/melpa/"))
 
 ;;; On-demand installation of packages
-(defun require-package (package &optional min-version no-refresh)
-  "Install given PACKAGE, optionally requiring MIN-VERSION.
-If NO-REFRESH is non-nil, the available package lists will not be
-re-downloaded in order to locate PACKAGE."
-  (if (package-installed-p package min-version)
+(defun require-package (package)
+  "Install PACKAGE if it's not installed."
+  (if (package-installed-p package)
       t
-    (if (or (assoc package package-archive-contents) no-refresh)
-        (if (boundp 'package-selected-packages)
-            ;; Record this as a package the user installed explicitly
-            (package-install package nil)
-          (package-install package))
+    (if (assoc package package-archive-contents)
+        (package-install package)
       (progn
         (package-refresh-contents)
-        (require-package package min-version t)))))
+        (package-install package)))))
 
-(defun maybe-require-package (package &optional min-version no-refresh)
-  "Try to install PACKAGE, and return non-nil if successful.
-In the event of failure, return nil and print a warning message.
-Optionally require MIN-VERSION.  If NO-REFRESH is non-nil, the
-available package lists will not be re-downloaded in order to
-locate PACKAGE."
+(defun maybe-require-package (package)
+  "Try to install PACKAGE, and return non-nil if successful or PACKAGE exists.
+In the event of failure, return nil and print a warning message."
   (condition-case err
-      (require-package package min-version no-refresh)
+      (require-package package)
     (error
-     (message "Couldn't install optional package `%s': %S" package err)
+     (message "Failed to install optional package `%s': %S" package err)
      nil)))
 
 (setq package-enable-at-startup nil)
@@ -83,12 +60,10 @@ locate PACKAGE."
 
 (require-package 'wgrep)
 (require-package 'diminish)
-(require-package 'command-log-mode)
-(maybe-require-package 'regex-tool)
 
 (xterm-mouse-mode 1)
 
-(setq-default custom-enabled-themes '(wombat))
+(setq custom-enabled-themes '(wombat))
 
 (defun remx/reapply-themes ()
   "Forcibly load the themes listed in `custom-enabled-themes'."
@@ -100,20 +75,13 @@ locate PACKAGE."
 
 (setq inhibit-startup-screen t)
 
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'set-scroll-bar-mode)
-  (set-scroll-bar-mode nil))
-(when (fboundp 'menu-bar-mode)
-  (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'set-scroll-bar-mode) (set-scroll-bar-mode nil))
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 (maybe-require-package 'disable-mouse)
 
 (setq dired-dwim-target t)
-
-;; Prefer g-prefixed coreutils version of standard utilities when available
-(let ((gls (executable-find "gls")))
-  (when gls (setq insert-directory-program gls)))
 
 (when (maybe-require-package 'anzu)
   (add-hook 'after-init-hook 'global-anzu-mode)
@@ -122,7 +90,6 @@ locate PACKAGE."
   (global-set-key [remap query-replace] 'anzu-query-replace))
 
 (define-key isearch-mode-map (kbd "C-c C-o") 'isearch-occur) ;; to match ivy conventions
-
 (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
 
 (defun remx/isearch-yank-symbol ()
@@ -138,7 +105,7 @@ locate PACKAGE."
       (ding)))
   (isearch-search-and-update))
 
-(define-key isearch-mode-map "\C-\M-w" 'remx/isearch-yank-symbol)
+(define-key isearch-mode-map (kbd "C-M-w") 'remx/isearch-yank-symbol)
 
 (defun remx/isearch-exit-other-end (rbeg rend)
   "Exit isearch, but at the other end of the search string.
@@ -157,6 +124,9 @@ This is useful when followed by an immediate kill."
   (require-package 'wgrep-ag)
   (setq ag-highlight-search t))
 
+(when (executable-find "rg")
+  (require-package 'rg))
+
 (require 'uniquify)
 (setq uniquify-ignore-buffers-re "^\\*")
 
@@ -166,28 +136,25 @@ This is useful when followed by an immediate kill."
 
 (when (maybe-require-package 'smex)
   (setq-default smex-history-length 32
-                smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
-  (global-set-key [remap execute-extended-command] 'smex))
+                smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
 
 (when (maybe-require-package 'ivy)
   (add-hook 'after-init-hook 'ivy-mode)
+  (with-eval-after-load 'ivy
+    (diminish 'ivy-mode))
   (setq ivy-use-virtual-buffers t
         ivy-initial-inputs-alist
         '((man . "^")
-          (woman . "^")))
-
-  (with-eval-after-load 'ivy
-    (diminish 'ivy-mode)))
+          (woman . "^"))))
 
 (when (maybe-require-package 'ivy-historian)
   (add-hook 'after-init-hook (lambda () (ivy-historian-mode t))))
 
 (when (maybe-require-package 'counsel)
   (add-hook 'after-init-hook 'counsel-mode)
-  (setq counsel-mode-override-describe-bindings t)
-
   (with-eval-after-load 'counsel
     (diminish 'counsel-mode))
+  (setq counsel-mode-override-describe-bindings t)
 
   (when (executable-find "ag")
     (global-set-key (kbd "M-s / a") 'counsel-ag))
@@ -338,7 +305,6 @@ This is useful when followed by an immediate kill."
                 term-mode-hook
                 comint-mode-hook
                 compilation-mode-hook
-                twittering-mode-hook
                 minibuffer-setup-hook))
   (add-hook hook #'remx/no-trailing-whitespace))
 
@@ -348,21 +314,21 @@ This is useful when followed by an immediate kill."
 (global-set-key [remap just-one-space] 'cycle-spacing)
 
 (when (maybe-require-package 'cmake-mode)
-  (add-auto-mode 'cmake-mode "CMakeLists\\.txt\\'" "\\.cmake\\'"))
+  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
+  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode)))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (add-hook 'prog-mode-hook 'goto-address-prog-mode)
 (setq goto-address-mail-face 'link)
 
-(add-auto-mode 'tcl-mode "Portfile\\'")
-(add-auto-mode 'conf-mode "Procfile")
-(add-auto-mode 'conf-space-mode "hostname")
-(add-auto-mode 'conf-mode "hosts")
-(add-auto-mode 'text-mode "\\LICENSE\\'")
+(add-to-list 'auto-mode-alist '("Portfile\\'" . tcl-mode))
+(add-to-list 'auto-mode-alist '("Procfile" . conf-mode))
+(add-to-list 'auto-mode-alist '("hostname" . conf-space-mode))
+(add-to-list 'auto-mode-alist '("hosts" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\LICENSE\\'" . text-mode))
 
-(when (file-exists-p custom-file)
-  (load custom-file))
+(when (file-exists-p custom-file) (load custom-file))
 
 (defun remx/utf8-locale-p (v)
   "Return whether locale string V relates to a UTF-8 locale."
