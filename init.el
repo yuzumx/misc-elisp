@@ -26,8 +26,6 @@
 (setq gc-cons-threshold 33554432)
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 800000)))
 
-(setq custom-file (expand-file-name ".emacs-custom.el" user-emacs-directory))
-
 (require 'cl-lib)
 
 (require 'package)
@@ -327,6 +325,7 @@ This is useful when followed by an immediate kill."
 (add-to-list 'auto-mode-alist '("hosts" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\LICENSE\\'" . text-mode))
 
+(setq custom-file (expand-file-name ".emacs-custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load custom-file))
 
 (defun remx/utf8-locale-p (v)
