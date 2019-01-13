@@ -131,10 +131,6 @@ This is useful when followed by an immediate kill."
   (add-hook 'after-init-hook #'global-flycheck-mode)
   (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
-(when (maybe-require-package 'smex)
-  (setq-default smex-history-length 32
-                smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
-
 (when (maybe-require-package 'ivy)
   (add-hook 'after-init-hook 'ivy-mode)
   (with-eval-after-load 'ivy
@@ -143,9 +139,6 @@ This is useful when followed by an immediate kill."
         ivy-initial-inputs-alist
         '((man . "^")
           (woman . "^"))))
-
-(when (maybe-require-package 'ivy-historian)
-  (add-hook 'after-init-hook (lambda () (ivy-historian-mode t))))
 
 (when (maybe-require-package 'counsel)
   (add-hook 'after-init-hook 'counsel-mode)
@@ -157,6 +150,10 @@ This is useful when followed by an immediate kill."
     (global-set-key (kbd "M-s / a") 'counsel-ag))
   (when (executable-find "rg")
     (global-set-key (kbd "M-s / r") 'counsel-rg)))
+
+(when (maybe-require-package 'smex)
+  (setq-default smex-history-length 32
+                smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
 
 (when (maybe-require-package 'swiper)
   (with-eval-after-load 'ivy
