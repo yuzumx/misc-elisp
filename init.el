@@ -1,6 +1,6 @@
 ;;; init.el --- Initialization File For Root User
 
-;; Copyright (C) 2017-2018 Mx Reimu
+;; Copyright (C) 2017-2019 Mx Reimu
 
 ;; Author: MX Reimu <https://github.com/re-mx>
 
