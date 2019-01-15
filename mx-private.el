@@ -20,6 +20,8 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(add-hook 'emacs-lisp-mode-hook (lambda () (flycheck-mode -1)))
+
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
 
 (provide 'mx-private)
