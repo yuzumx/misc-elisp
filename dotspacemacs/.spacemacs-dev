@@ -44,7 +44,7 @@ This function should only modify configuration layer settings."
      better-defaults
      emacs-lisp
      c-c++
-     clojure
+     ;; clojure
      common-lisp
      html
      javascript
