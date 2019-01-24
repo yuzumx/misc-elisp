@@ -137,7 +137,7 @@ This is useful when followed by an immediate kill."
     (diminish 'ivy-mode))
   (setq ivy-use-virtual-buffers t
         ivy-initial-inputs-alist
-        '((man . "^")
+        '((Man-completion-table . "^")
           (woman . "^"))))
 
 (when (maybe-require-package 'counsel)
