@@ -146,10 +146,11 @@ This is useful when followed by an immediate kill."
     (diminish 'counsel-mode))
   (setq counsel-mode-override-describe-bindings t)
 
-  (when (executable-find "ag")
-    (global-set-key (kbd "M-s / a") 'counsel-ag))
-  (when (executable-find "rg")
-    (global-set-key (kbd "M-s / r") 'counsel-rg)))
+  (cond
+   ((executable-find "rg")
+    (global-set-key (kbd "C-c g") 'counsel-rg))
+   ((executable-find "ag")
+    (global-set-key (kbd "C-c g") 'counsel-ag))))
 
 (when (maybe-require-package 'smex)
   (setq-default smex-history-length 32
