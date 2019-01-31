@@ -17,6 +17,8 @@
  lua-indent-level 4
  lua-indent-string-contents t)
 
+(setq-default org-hide-emphasis-markers t)
+
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
