@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2017-2019 Mx Reimu
 
-;; Author: MX Reimu <https://github.com/re-mx>
+;; Author: Yuri MX <https://github.com/yurimx>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

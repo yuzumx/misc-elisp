@@ -11,4 +11,4 @@
 
   *DO NOT* use it directly!
 
-  -MX Reimu
+  -Yuri MX
