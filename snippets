@@ -1,56 +1,22 @@
 ;; -*- mode: emacs-lisp; -*-
 
-;; Ruby - my convention for heredocs containing SQL
-;; Needs to run after rinari to avoid clobbering font-lock-keywords?
-;; (require-package 'mmm-mode)
-;; (eval-after-load 'mmm-mode
-;;   '(progn
-;;      (mmm-add-classes
-;;       '((ruby-heredoc-sql
-;;          :submode sql-mode
-;;          :front "<<-?[\'\"]?\\(end_sql\\)[\'\"]?"
-;;          :save-matches 1
-;;          :front-offset (end-of-line 1)
-;;          :back "^[ \t]*~1$"
-;;          :delimiter-mode nil)))
-;;      (mmm-add-mode-ext-class 'ruby-mode "\\.rb\\'" 'ruby-heredoc-sql)))
-;; (add-to-list 'mmm-set-file-name-for-modes 'ruby-mode)
-
-;;; git-svn support
-;; (when (maybe-require-package 'magit-svn)
-;;   (require-package 'magit-svn)
-;;   (autoload 'magit-svn-enabled "magit-svn")
-;;   (defun remx/maybe-enable-magit-svn-mode ()
-;;     (when (magit-svn-enabled)
-;;       (magit-svn-mode)))
-;;   (add-hook 'magit-status-mode-hook #'remx/maybe-enable-magit-svn-mode))
-
-;;; A workaround for irony-mode and php-mode compatibility
-;; (remove-hook 'c-mode-hook 'irony-mode)
-;; (defun remx//irony-mode-on ()
-;;   "Avoid enabling irony-mode in modes that inherits `c-mode', e.g: php-mode."
-;;   (require 'irony)
-;;   (when (member major-mode irony-supported-major-modes)
-;;     (irony-mode 1)))
-;; (add-hook 'c-mode-hook 'remx//irony-mode-on)
-
-;; (defun remx/clang-format-for-c-mode ()
+;; (defun yuri/clang-format-for-c-mode ()
 ;;   "Enable `clang-format' for C mode."
 ;;   (require 'clang-format)
 ;;   (setq-default clang-format-style "llvm")
 ;;   (define-key c-mode-map (kbd "C-c u") 'clang-format-buffer))
 
-;; (defun remx/clang-format-for-cpp-mode ()
+;; (defun yuri/clang-format-for-cpp-mode ()
 ;;   "Enable `clang-format' for C++ mode."
 ;;   (require 'clang-format)
 ;;   (setq-default clang-format-style "llvm")
 ;;   (define-key c++-mode-map (kbd "C-c u") 'clang-format-buffer))
 
-;; (add-hook 'c-mode-hook 'remx/clang-format-for-c-mode)
-;; (add-hook 'c++-mode-hook 'remx/clang-format-for-cpp-mode)
+;; (add-hook 'c-mode-hook 'yuri/clang-format-for-c-mode)
+;; (add-hook 'c++-mode-hook 'yuri/clang-format-for-cpp-mode)
 
 ;;; Find private settings
-(defun remx/find-mxem-private-config ()
+(defun yuri/find-mxem-private-config ()
   "Find mxem private configuration file."
   (interactive)
   (find-file-existing

@@ -1,4 +1,4 @@
-;;; mx-private.el --- Private Configuration for mxem on Mac
+;;; yuri-private.el --- Private Configuration for mxem on Mac
 
 
 (set-frame-size (selected-frame) 120 36)
@@ -12,4 +12,4 @@
 
 (remx/set-frame-opacity 92)
 
-(provide 'mx-private)
+(provide 'yuri-private)

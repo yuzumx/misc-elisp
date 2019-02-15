@@ -1,4 +1,4 @@
-;;; mx-private.el --- My Private Configuration for mxem
+;;; yuri-private.el --- My Private Configuration for mxem
 
 
 (dolist (hook '(c-mode-hook c++-mode-hook))
@@ -24,4 +24,4 @@
 
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
 
-(provide 'mx-private)
+(provide 'yuri-private)
