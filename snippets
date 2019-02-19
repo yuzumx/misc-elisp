@@ -1,19 +1,21 @@
 ;; -*- mode: emacs-lisp; -*-
 
-;; (defun yuri/clang-format-for-c-mode ()
-;;   "Enable `clang-format' for C mode."
-;;   (require 'clang-format)
-;;   (setq-default clang-format-style "llvm")
-;;   (define-key c-mode-map (kbd "C-c u") 'clang-format-buffer))
 
-;; (defun yuri/clang-format-for-cpp-mode ()
-;;   "Enable `clang-format' for C++ mode."
-;;   (require 'clang-format)
-;;   (setq-default clang-format-style "llvm")
-;;   (define-key c++-mode-map (kbd "C-c u") 'clang-format-buffer))
+;;; Enable clang-format
+(defun yuri/clang-format-for-c-mode ()
+  "Enable `clang-format' for C mode."
+  (require 'clang-format)
+  (setq-default clang-format-style "llvm")
+  (define-key c-mode-map (kbd "C-c u") 'clang-format-buffer))
 
-;; (add-hook 'c-mode-hook 'yuri/clang-format-for-c-mode)
-;; (add-hook 'c++-mode-hook 'yuri/clang-format-for-cpp-mode)
+(defun yuri/clang-format-for-cpp-mode ()
+  "Enable `clang-format' for C++ mode."
+  (require 'clang-format)
+  (setq-default clang-format-style "llvm")
+  (define-key c++-mode-map (kbd "C-c u") 'clang-format-buffer))
+
+(add-hook 'c-mode-hook 'yuri/clang-format-for-c-mode)
+(add-hook 'c++-mode-hook 'yuri/clang-format-for-cpp-mode)
 
 ;;; Find private settings
 (defun yuri/find-mxem-private-config ()
