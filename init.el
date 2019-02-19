@@ -296,9 +296,9 @@ This is useful when followed by an immediate kill."
       (browse-url (concat "file://" file-name)))))
 
 ;;; Syntax checking
-(when (maybe-require-package 'flycheck)
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
+(require-package 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
 
 ;;; Misc
 (add-hook 'after-init-hook 'xterm-mouse-mode)
