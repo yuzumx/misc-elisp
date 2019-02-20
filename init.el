@@ -221,7 +221,7 @@ This is useful when followed by an immediate kill."
         try-expand-dabbrev-from-kill))
 
 (require-package 'company)
-(add-hook 'after-init-hook 'global-company)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; Ivy
 (require-package 'ivy)
