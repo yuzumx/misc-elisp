@@ -10,6 +10,6 @@
 
 (setq dired-use-ls-dired nil)
 
-(remx/set-frame-opacity 92)
+(yuri/set-frame-opacity 92)
 
 (provide 'yuri-private)
