@@ -209,6 +209,8 @@ This is useful when followed by an immediate kill."
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 ;;; Completion
+(setq tab-always-indent 'complete)
+
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 (setq hippie-expand-try-functions-list
